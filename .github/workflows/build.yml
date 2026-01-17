@@ -1,4 +1,6 @@
-name: Build and Release EXE
+name: GitHub Actions 自动构建代码
+
+run-name: 正在自动构建版本 ${{ github.ref_name }}
 
 on:
   push:
