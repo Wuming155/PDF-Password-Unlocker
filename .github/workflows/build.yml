@@ -1,0 +1,37 @@
+name: 自动打包 EXE
+
+on:
+  push:
+    branches: [ "main" ]  # 只要你推送代码到 main 分支就会触发
+  workflow_dispatch:      # 允许你在 GitHub 页面手动点击运行
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: 拉取代码
+      uses: actions/checkout@v4
+
+    - name: 设置 Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: 使用 PyInstaller 打包
+      # --onefile: 打包成单个exe
+      # --noconsole: 运行时不显示黑窗口
+      # --name: 指定生成的文件名
+      run: |
+        pyinstaller --onefile --noconsole --name "PDF-Restriction-Remover", main.py 
+
+    - name: 上传打包产物
+      uses: actions/upload-artifact@v4
+      with:
+        name: PDF-Unlocker-Windows
+        path: dist/*.exe
