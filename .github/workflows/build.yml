@@ -26,8 +26,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Build with PyInstaller
-      run: |
-        pyinstaller --clean --onefile --noconsole --name "PDF-Restriction-Remover" main.py
+      run: pyinstaller --clean --onefile --noconsole --name "PDF-Restriction-Remover" main.py
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
